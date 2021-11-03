@@ -5,11 +5,16 @@ var mongoose = require('mongoose'),
   SleepHour = mongoose.model('SleepHour');
 
 exports.list_all_sleephours = function(req, res) {
-  SleepHour.find({}, function(err, sleephour) {
+  const qsps = req.query;
+  const { userId, startTime, endTime } = qsps;
+  
+  function callback(err, sleephours) {
     if (err)
       res.send(err);
-    res.json(sleephour);
-  });
+    res.json(sleephours);
+  }
+
+  SleepHour.find({ userId }).where('date').gte(startTime).lte(endTime).sort({ date: "asc"}).exec(callback);
 };
 
 exports.create_a_sleephour = function(req, res) {
@@ -23,7 +28,6 @@ exports.create_a_sleephour = function(req, res) {
         
         });
     } catch (err){
-        console.log('Here with ', err);
         res.status(500).send({ smessage: err?.message });
     }
 };
@@ -63,7 +67,6 @@ exports.delete_a_sleephour = function(req, res) {
 
 function getUpdatedDuration(body) {
     const { sleepTime, wakeTime } = body;
-    console.log(`ST: `, sleepTime, ` and WT: `, wakeTime);
     if (wakeTime < sleepTime){
         throw new Error(`You cant wake up before you fall asleep`);
     }
