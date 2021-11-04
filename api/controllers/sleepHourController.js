@@ -14,7 +14,7 @@ exports.list_all_sleephours = function(req, res) {
     res.json(sleephours);
   }
 
-  SleepHour.find({ userId }).where('date').gte(startTime).lte(endTime).sort({ date: "asc"}).exec(callback);
+  SleepHour.find({ userId }).where('date').gte(startTime).lte(endTime).sort({ date: "descp"}).exec(callback);
 };
 
 exports.create_a_sleephour = function(req, res) {
