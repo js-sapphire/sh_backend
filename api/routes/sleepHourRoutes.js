@@ -5,7 +5,8 @@ module.exports = function(app) {
   // sleepHour Routes
   app.route('/sleephours')
     .get(sleepHourController.list_all_sleephours)
-    .post(sleepHourController.create_a_sleephour);
+    .post(sleepHourController.create_a_sleephour)
+    .delete(sleepHourController.delete_all_sleephours)
 
 
   app.route('/sleephours/:sleephourId')

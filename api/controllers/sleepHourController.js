@@ -11,10 +11,11 @@ exports.list_all_sleephours = function(req, res) {
   function callback(err, sleephours) {
     if (err)
       res.send(err);
+    console.log(sleephours);
     res.json(sleephours);
   }
 
-  SleepHour.find({ userId }).where('date').gte(startTime).lte(endTime).sort({ date: "descp"}).exec(callback);
+ SleepHour.find({ userId }).where('date').gte(startTime).lte(endTime).exec(callback);
 };
 
 exports.create_a_sleephour = function(req, res) {
@@ -54,6 +55,13 @@ exports.update_a_sleephour = function(req, res) {
     }
   };
 
+exports.delete_all_sleephours = function(req, res) {
+  SleepHour.remove({}, function(err, sleephours) {
+    if (err)
+      res.send(err);
+    res.json({ message: `All sleephours deleted successfully!`});
+  });
+};
 
 exports.delete_a_sleephour = function(req, res) {
   SleepHour.remove({
