@@ -10,4 +10,3 @@ yarn-error.log*
 
 # environment
 prod.env
-package-lock.json
